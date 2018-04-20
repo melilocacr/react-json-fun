@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!--<link rel="icon" href="../../../../favicon.ico">-->
+
+  <title>Dolls Kill Product info</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+    crossorigin="anonymous">
+
+  <!-- React JS -->
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+  <!-- Custom styles -->
+  <style>
+    .container {
+      position: relative;
+      height: 40em;
+    }
+
+    .form-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+
+
+</head>
+
+<body>
+
+  <div class="container">
+    <div id="root"></div>
+    <div class="form-container">
+      <h1>Product Size and Quantity Request form</h2>
+        <hr/>
+        <form>
+          <div class="form-group">
+            <label for="product-id">Product ID(s):</label>
+            <input type="text" class="form-control" id="product-id" placeholder="Enter Product ID(s) separated by commas" name="product-id">
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+
+        <div id="products"></div>
+    </div>
+
+  </div>
+  
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+    crossorigin="anonymous"></script>
+  <!--<script src="js/main.js"></script>-->
+  <script type="text/babel" src="js/product-info.js"></script>
+
+</body>
+
+</html>
