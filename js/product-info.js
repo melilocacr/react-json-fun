@@ -1,4 +1,4 @@
-var stock = {
+var stock = { // Set this variable equal to the API response, after validating form data and doing the request
     "myShirt": [
         {
             "size_text": "Small",
@@ -55,9 +55,10 @@ class Products extends React.Component {
         return (
             <div>
                 {
+                    // this part can display size and quantities to console. How do I modify this code to actually display to browser? 
                     Object.keys(stock).map(e => {
                         console.log(e + ":");
-                        stock[e].map(o => console.log(o.size_text + " has " + o.quantity + " in stock"))
+                        stock[e].map(o => console.log(o.size_text + " has " + o.quantity + " in stock"));
                     })
                 }
             </div>
