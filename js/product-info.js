@@ -74,12 +74,10 @@ class RequestForm extends React.Component {
             .then(res => res.json())
             .then(
                 (result) => {
-                    this.setState({ fetchedProducts: result })
+                    this.setState({ fetchedProducts: result });
                     console.log(this.state.fetchedProducts);
                 }
-            );
-
-        
+            )
     }
 
     render() {
