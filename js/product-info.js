@@ -2,15 +2,15 @@ var stock = { // Set this variable equal to the API response, after validating f
     "myShirt": [
         {
             "size_text": "Small",
-            "quantity": 0,
+            "quantity": 1,
         },
         {
             "size_text": "Medium",
-            "quantity": 0,
+            "quantity": 3,
         },
         {
             "size_text": "Large",
-            "quantity": 0,
+            "quantity": 5,
         },
     ],
 
@@ -21,7 +21,7 @@ var stock = { // Set this variable equal to the API response, after validating f
         },
         {
             "size_text": "Medium",
-            "quantity": 0,
+            "quantity": 2,
         },
         {
             "size_text": "Large",
@@ -53,18 +53,19 @@ class Products extends React.Component {
     }
     render() {
         return (
-            <div>
-                {
-                    // this part can display size and quantities to console. How do I modify this code to actually display to browser? 
-                    Object.keys(stock).map(e => {
-                        console.log(e + ":");
-                        stock[e].map(o => console.log(o.size_text + " has " + o.quantity + " in stock"));
-                    })
-                }
+            <div id="product-container">{Object.keys(stock).map(productId => {
+            return <div id="product-info">
+                    <h2>{productId}</h2>
+                    <div id="product-line-detail">{
+                        stock[productId].map(productDetail => <div className={'left'}>{`${productDetail.size_text} has ${productDetail.quantity} in stock`}</div>)
+                    }
+                    </div>
             </div>
-        );
+            })}
+            </div>
+        )
     }
-}
+} 
 
 ReactDOM.render(
     <Products />,
