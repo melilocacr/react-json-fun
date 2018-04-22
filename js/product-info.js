@@ -75,7 +75,7 @@ class RequestForm extends React.Component {
             .then(
                 (result) => {
                     this.setState({ fetchedProducts: result });
-                    console.log(this.state.fetchedProducts);
+                    console.log(this.state.fetchedProducts); // THIS LOGS FINE!!
                 }
             )
     }
@@ -112,11 +112,12 @@ class ProductList extends React.Component {
         super(props);
 
         this.state = {
-            data: {}
+            data: this.props.products
         }
     }
 
     render() {
+        console.log(this.state.data); //NOTHING LOGS HERE!!!
         return (
             <div id="product-container">{Object.keys(this.state.data).map(productId => {
                 return <div id="product-info">
@@ -135,5 +136,4 @@ class ProductList extends React.Component {
 ReactDOM.render(
     <RequestForm />,
     document.getElementById('form'),
-    function () { console.log('ReactDOM.render has been called'); }
 );
