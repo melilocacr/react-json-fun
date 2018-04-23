@@ -152,7 +152,7 @@ class RequestForm extends React.Component {
                                     value={this.state.productId}
                                     onChange={this.handleChange} /> 
                             </div>
-                            <button type="submit" className={"btn btn-default"}>SUBMIT</button>
+                            <button type="submit" className={"btn btn-default btn-pink"}>SUBMIT</button>
                         </form>
                     </div>
                 </div>
