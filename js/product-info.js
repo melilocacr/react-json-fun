@@ -49,7 +49,7 @@ var stock = {
             "color_text": "BLUE",
             "size_id": "2901",
             "size_text": "Medium",
-            "quantity": 0,
+            "quantity": 8,
             "display_brand": "Leg Avenue"
         },
         "5": {
@@ -93,16 +93,36 @@ class RequestForm extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.fetchProductData = this.fetchProductData.bind(this);
+        this.validateFormInput = this.validateFormInput.bind(this);
     }
 
     handleChange(event) {
         this.setState({ productId: event.target.value });
     }
 
-    handleSubmit(event) {
-        this.fetchProductData();
-        event.preventDefault();
+    validateFormInput(productIdInput) {
+        let desiredInput = /^([0-9]+,)*[0-9]+$/;
+    
+        if(productIdInput.match(desiredInput)) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
     }
+
+    handleSubmit(event) {
+        if( this.validateFormInput(this.state.productId )) {
+            this.fetchProductData();
+            event.preventDefault();
+        }
+        else {
+            alert('Format for product(s) not valid');
+        }
+        
+    }
+
+    
 
     fetchProductData() {
         var sizeRequestUrl = 'https://www.dollskill.com/codetest/api.php?ids=' + this.state.productId + '&op=get_size_attributes';
@@ -130,7 +150,7 @@ class RequestForm extends React.Component {
                                 <input type="text" className={"form-control"}
                                     placeholder="Enter product Id(s) separated by commas (i.e 143249,142593,141975,150605)"
                                     value={this.state.productId}
-                                    onChange={this.handleChange} />
+                                    onChange={this.handleChange} /> 
                             </div>
                             <button type="submit" className={"btn btn-default"}>SUBMIT</button>
                         </form>
@@ -179,7 +199,7 @@ class Product extends React.Component {
     renderSortableRow(row) {
         var row = {
             "quantity": row.quantity,
-            "size": row.size_text,
+            "size_text": row.size_text,
             "simple_id": row.simple_id
         }
 
@@ -227,7 +247,7 @@ class Product extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {inStockProdStr.map(p => p)}
+                            {outStockProdStr.map(p => p)}
                         </tbody>
                     </table>
                 </div>
@@ -239,7 +259,7 @@ class Product extends React.Component {
         return (
             <div id="product-container">
                 <div id="product-info">
-                    <h2>{this.props.productId}</h2>
+                    <h3>Product ID. {this.props.productId}</h3>
                     <div id="product-line-detail">
                         {
                             this.renderProductDetails(this.props.prodStock)
@@ -254,10 +274,51 @@ class Product extends React.Component {
 class InStockTable extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            data: [],
+            sortOrder: '',
+        }
+
+        this.compareBy.bind(this);
+        this.sortBy.bind(this);
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.stockArr !== prevState.data) {
+            return { data: nextProps.stockArr };
+        }
+        return null;
+    }
+
+    compareBy(key) {
+        if (this.state.sortOrder == '' || this.state.sortOrder == 'asc') {
+            this.setState({sortOrder: 'des'});
+            return function (a, b) {
+                if (a[key] < b[key]) return -1;
+                if (a[key] > b[key]) return 1;
+                return 0;
+            }
+        }
+        else {
+            this.setState({sortOrder: 'asc'});
+            return function (a, b) {
+                if (a[key] < b[key]) return 1;
+                if (a[key] > b[key]) return -1;
+                return 0;
+            }
+        }
+    }
+
+    sortBy(key) {
+        let arrayCopy = [...this.state.data];
+        arrayCopy.sort(this.compareBy(key));
+        this.setState({ data: arrayCopy });
     }
 
     render() {
-        console.log(this.props.stockArr);
+
+        console.log(this.state.data);
 
         return (
             <div className={'in-stock'}>
@@ -265,13 +326,13 @@ class InStockTable extends React.Component {
                 <table className={'table'}>
                     <thead className="thead-dark">
                         <tr>
-                            <th scope="col">Qty</th>
+                            <th onClick={() => this.sortBy('quantity')} scope="col">Qty ^</th>
                             <th scope="col">Size</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            this.props.stockArr.map((s) => (
+                            this.state.data.map((s) => (
                                 <tr key={s.simple_id}>
                                     <td>{s.quantity}</td>
                                     <td>{s.size_text}</td>
